@@ -17,6 +17,7 @@ const UserDetails = () => {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -95,7 +96,7 @@ const UserDetails = () => {
             toast.error("Status entered must be either 'active' or 'inactive'");
             return;
         }
-        setLoading(true);
+        setIsLoading(true);
 
         axios.patch(`https://rbac-server.vercel.app/update/${id}`, { name, email, role, status })
             .then((result) => {
@@ -103,7 +104,7 @@ const UserDetails = () => {
                 setTimeout(() => {
                     navigate(`/org/${id}`);
                 }, 2000);
-                setLoading(false);
+                setIsLoading(false);
             })
             .catch((error) => {
                 if (error.response) {
@@ -112,7 +113,7 @@ const UserDetails = () => {
                 else if (!error.response) {
                     toast.error(`${error.message}. Please try again later`, { autoclose: 5000 })
                 }
-                setLoading(false);
+                setIsLoading(false);
             });
     }
 
@@ -205,7 +206,7 @@ const UserDetails = () => {
                             disabled={!isFormValid}
                             className={`w-[150px] flex justify-center items-center h-10 px-4 font-semibold rounded-md border border-slate-200 text-white bg-black ${isFormValid ? "bg-black" : "bg-gray-500 cursor-not-allowed"}`}
                         >
-                            {loading && <Spinner color={"white"} width={"w-5"} />} Save
+                            {isLoading && <Spinner color={"white"} width={"w-5"} />} Save
                         </button>)}
                     </div>
                 </div>
