@@ -44,13 +44,13 @@ const Signup = () => {
   const isFormValid = name && email && password;
 
   return (
-    <div className="w-full">
+    <div className="w-full text-white bg-cyan-900 h-screen">
       <Navbar />
       <div className="flex justify-center">
         <h1 className="text-5xl mt-8 font-serif">Sign Up!</h1>
       </div>
 
-      <div className="bg-yellow-400 flex my-8 justify-center border-4 rounded-md">
+      <div className="bg-yellow-400 flex my-16 mx-auto w-11/12 sm:w-11/12 md:w-1/2 lg:w-1/2 justify-center border-4 rounded-md">
         <form onSubmit={handleSubmit}>
           <div className="mt-8 mb-4">
             <label className="block text-sm/6 font-medium text-gray-900">
@@ -103,7 +103,7 @@ const Signup = () => {
           </div>
 
           <div className="mb-8 flex justify-center">
-            <p>
+            <p className="text-black">
               Already have an account?<span className="mx-1"></span>
               <NavLink to="/login" className="text-white">
                 Log In !

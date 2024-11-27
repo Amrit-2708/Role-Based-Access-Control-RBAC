@@ -47,13 +47,13 @@ const Login = () => {
   }
 
   return (
-    <div className="w-full text-white bg-cyan-900">
+    <div className="w-full text-white bg-cyan-900 h-screen">
       <Navbar />
       <div className="flex justify-center">
         <h1 className="text-5xl mt-8 font-serif">Log In!</h1>
       </div>
 
-      <div className="bg-yellow-400 flex mt-8 justify-center border-4 rounded-md">
+      <div className="bg-yellow-400 flex my-16 mx-auto w-11/12 sm:w-11/12 md:w-1/2 lg:w-1/2 justify-center items-center border-8 rounded-md">
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="mt-8 block text-sm/6 font-medium text-gray-900">
@@ -90,7 +90,7 @@ const Login = () => {
             </button>
           </div>
           <div className="mb-8 flex justify-center">
-            <p>
+            <p className="text-black">
               Not Joined Us Yet?<span className="mx-1"></span>
               <NavLink to="/signup" className="text-white">
                 Sign Up !
