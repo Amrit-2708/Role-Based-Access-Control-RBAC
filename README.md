@@ -15,7 +15,7 @@
    - On successful signup, the user is redirected to the login page.  
 
 ### 4. **Default Role Assignment**
-   - New accounts are assigned the role **User** by default.
+   - New accounts are assigned the role "**user**" by default.
 
 ### 5. **User Role Workflow**
    - **Post-Login:**  
@@ -98,3 +98,8 @@
    ```
    
 3. Server is already hosted on `https://rbac-server.vercel.app`
+
+4. Since all new users who signs up are alloted the role as 'user', one can use the following credentials to log in as admin and change their account's role:
+   ```bash
+   email: amrit@test.com
+   password: 54321
