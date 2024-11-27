@@ -55,7 +55,7 @@ const UserDetails = () => {
         };
 
         fetchUser(); // Fetch user data when the component mounts
-    }, [id]); // Dependency on 'id' ensures it reloads when the URL changes
+    }, [id]); // Dependency on 'id' ensures that it reloads when the URL changes
 
 
     function handleEditUser() {
@@ -72,14 +72,12 @@ const UserDetails = () => {
     };
 
     const validateRole = (roleValue) => {
-        // Only allow "admin" or "user"
         if (roleValue !== "admin" && roleValue !== "user") {
             return false;
         }
         return true;
     };
     const validateStatus = (statusValue) => {
-        // Only allow "admin" or "user"
         if (statusValue !== "active" && statusValue !== "inactive") {
             return false;
         }
@@ -127,7 +125,7 @@ const UserDetails = () => {
             {shouldDelete && (<DeleteConfirmationModal id={id} closeDeleteModal={closeDeleteModal} />)}
             {loading && <div className='h-screen w-full flex justify-center items-center'> <Spinner color={"black"} width={"w-20"} marginRight='mr-0'/></div>}
             {!loading && user && (<div className='bg-cyan-900 flex justify-center items-center h-screen'>
-                <div className='w-1/3 flex flex-col items-start border-8 border-yellow-500 overflow-x-auto'>
+                <div className='w-11/12 sm:w-3/4 md:w-3/5 lg:w-auto flex flex-col items-start border-8 border-yellow-500 overflow-x-auto'>
                     <div className='flex flex-col mt-5 ml-8 mb-8 '>
                         <span className='text-2xl text-white font-bold'>ID</span>
                         <span className='text-white'>{user._id}</span>
@@ -183,7 +181,7 @@ const UserDetails = () => {
                         />)}
                     </div>
 
-                    <div className="ml-8 mb-5 mr-8 flex flex-col sm:flex-col md:flex-col lg:flex-row lg:space-x-24">
+                    <div className="ml-8 mb-5 mr-8 flex flex-col sm:flex-row sm:space-x-20 md:flex-row md:self-center lg:flex-row lg:space-x-24">
                         {!edit && isAdmin && !details_same_as_logged_in_user && (<button onClick={handleDeleteUser}
                             className="w-[150px] h-10 px-4 font-semibold rounded-md mb-4 sm:mb-4 lg:mb-0 border border-slate-200 text-white bg-black"
                         >

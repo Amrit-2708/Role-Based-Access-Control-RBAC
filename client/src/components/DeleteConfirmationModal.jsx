@@ -16,9 +16,6 @@ export default function Example({ id, closeDeleteModal }) {
     const [open, setOpen] = useState(true);
     const navigate = useNavigate();
 
-    // const id = props.id;
-
-
     function handleDeleteUser(e) {
         e.preventDefault();
         axios

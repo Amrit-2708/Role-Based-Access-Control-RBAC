@@ -10,15 +10,15 @@ import Spinner from './spinner';
 
 const Orgview = () => {
     const [users, setUsers] = useState([]); // State to store user data
-    const [error, setError] = useState(null); // State for errors
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
     const [loading, setLoading] = useState(false);
 
     const [isAdmin, setIsAdmin] = useState(false);
 
-    const [currentPage, setCurrentPage] = useState(1); // State to manage current page
-    const [rowsPerPage] = useState(5); // Number of rows per page
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage] = useState(5);
 
     const navigate = useNavigate();
 
@@ -50,11 +50,11 @@ const Orgview = () => {
                 const response = await axios.get("https://rbac-server.vercel.app/users");
 
                 if (response.data.message === "Users retrieved successfully") {
-                    setUsers(response.data.data); // Store the users in state
+                    setUsers(response.data.data);
                 }
                 setLoading(false);
             } catch (error) {
-                setError("Error fetching users"); // Handle the error
+                setError("Error fetching users"); 
                 console.error("Error fetching users:", error);
                 setLoading(false);
             }
@@ -78,7 +78,7 @@ const Orgview = () => {
         user.role.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const totalPages = Math.ceil(filteredUsers.length / rowsPerPage); // Total number of pages
+    const totalPages = Math.ceil(filteredUsers.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage; // Start index for the current page
     const endIndex = startIndex + rowsPerPage; // End index for the current page
     const currentUsers = filteredUsers.slice(startIndex, endIndex); // Slice users for the current page
@@ -99,7 +99,7 @@ const Orgview = () => {
                             aria-label="Filter projects"
                             placeholder="Search user..."
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+                            onChange={(e) => setSearchTerm(e.target.value)}
                         />
                         <MagnifyingGlassIcon className="absolute left-3 top-2.5 w-5 h-5 text-slate-400" />
                         {isAdmin && (<button onClick={handleaddUser}
