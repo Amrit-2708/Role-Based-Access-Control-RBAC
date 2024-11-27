@@ -5,6 +5,7 @@ import axios from 'axios';
 
 //components
 import Navbar from './Navbar';
+import Spinner from './spinner';
 
 
 const Orgview = () => {
@@ -12,8 +13,9 @@ const Orgview = () => {
     const [error, setError] = useState(null); // State for errors
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const [isAdmin, setIsAdmin] = useState(false);
-    // const { id } = useParams();
 
     const [currentPage, setCurrentPage] = useState(1); // State to manage current page
     const [rowsPerPage] = useState(5); // Number of rows per page
@@ -43,15 +45,18 @@ const Orgview = () => {
     useEffect(() => {
         // Fetch users when the component mounts
         const fetchUsers = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get("https://rbac-server.vercel.app/users");
 
                 if (response.data.message === "Users retrieved successfully") {
                     setUsers(response.data.data); // Store the users in state
                 }
+                setLoading(false);
             } catch (error) {
                 setError("Error fetching users"); // Handle the error
                 console.error("Error fetching users:", error);
+                setLoading(false);
             }
         };
 
@@ -79,12 +84,13 @@ const Orgview = () => {
     const currentUsers = filteredUsers.slice(startIndex, endIndex); // Slice users for the current page
 
     return (
-        <div className='bg-cyan-900'>
+        <div className=''>
             <Navbar isAdmin={isAdmin} />
+            {loading && <div className='h-screen w-full flex justify-center items-center'> <Spinner color={"black"} width={"w-20"} marginRight='mr-0'/></div>}
             {users.length >0 && (<div className='bordder-8 bg-cyan-900 flex justify-center'>
                 <h1 className='text-5xl text-white font-bold mt-5 mb-5'>Welcome {localStorage.getItem("role")}</h1>
             </div>)}
-            {users.length>0 && (<div className='bg-cyan-900 flex justify-center mt-12 iteems-center h-screen'>
+            {users.length>0 && (<div className='bg-cyan-900 flex justify-center pt-12 iteems-center h-screen'>
                 <div className="bg-pinnk-400 border-yellow-500 flex flex-col overflow-x-auto">
                     <div className="relative bg-red-d400 border-8d mb-2 flex flex-col sm:flex-row justify-between">
                         <input

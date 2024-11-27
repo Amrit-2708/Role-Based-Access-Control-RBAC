@@ -16,7 +16,7 @@ const ChangePassword = () => {
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
-
+    
     const isbtnValid = newPass;
 
     function handlePasswordChange(e) {

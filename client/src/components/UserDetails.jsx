@@ -41,15 +41,15 @@ const UserDetails = () => {
     });
 
     useEffect(() => {
-        <div className='bg-cyan-900'>
-            <h1 className='text-7xl'>Loading.... Please Wait!!!</h1>
-        </div>
         const fetchUser = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`https://rbac-server.vercel.app/users/${id}`);
                 setUser(response.data);
+                setLoading(false);
             } catch (err) {
                 setError('Error fetching user details');
+                setLoading(false);
             }
         };
 
@@ -124,7 +124,8 @@ const UserDetails = () => {
         <div>
             <Navbar isAdmin={isAdmin} />
             {shouldDelete && (<DeleteConfirmationModal id={id} closeDeleteModal={closeDeleteModal} />)}
-            {user && (<div className='bg-cyan-900 flex justify-center items-center h-screen'>
+            {loading && <div className='h-screen w-full flex justify-center items-center'> <Spinner color={"black"} width={"w-20"} marginRight='mr-0'/></div>}
+            {!loading && user && (<div className='bg-cyan-900 flex justify-center items-center h-screen'>
                 <div className='w-1/3 flex flex-col items-start border-8 border-yellow-500 overflow-x-auto'>
                     <div className='flex flex-col mt-5 ml-8 mb-8 '>
                         <span className='text-2xl text-white font-bold'>ID</span>
@@ -209,7 +210,7 @@ const UserDetails = () => {
                     </div>
                 </div>
             </div>)}
-            {error && (<div className='text-3xl font-bold font-serif Times New Roman bg-cyan-900 flex justify-center items-center h-screen'>
+            {!loading && error && (<div className='text-3xl font-bold font-serif Times New Roman bg-cyan-900 flex justify-center items-center h-screen'>
                 <div>
                     <span>{error}. Please try again</span>
                 </div>

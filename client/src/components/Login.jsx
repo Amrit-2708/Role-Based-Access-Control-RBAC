@@ -37,8 +37,9 @@ const Login = () => {
         localStorage.setItem("role", result.data.role);
         setTimeout(() => {
           navigate(`/org/${result.data.id}`);
+          setLoading(false);
         }, 2000);
-        setLoading(false);
+        
       }
       )
       .catch((error) => {
