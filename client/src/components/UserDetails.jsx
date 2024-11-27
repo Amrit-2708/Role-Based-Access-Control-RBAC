@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
-import Navbar from './Navbar'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import axios from 'axios'
+
+//toastify
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+//components
 import DeleteConfirmationModal from './DeleteConfirmationModal'
-
-
+import Spinner from "./spinner";
+import Navbar from './Navbar';
 
 const UserDetails = () => {
     const [edit, setEdit] = useState(false);
 
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -37,14 +41,15 @@ const UserDetails = () => {
     });
 
     useEffect(() => {
+        <div className='bg-cyan-900'>
+            <h1 className='text-7xl'>Loading.... Please Wait!!!</h1>
+        </div>
         const fetchUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/users/${id}`);
-                console.log(response.data);
+                const response = await axios.get(`https://rbac-server.vercel.app/users/${id}`);
                 setUser(response.data);
             } catch (err) {
                 setError('Error fetching user details');
-                console.error(err);
             }
         };
 
@@ -54,7 +59,6 @@ const UserDetails = () => {
 
     function handleEditUser() {
         setEdit(true);
-        console.log("aaja aaja", edit);
     }
 
     function handleDeleteUser(e) {
@@ -82,6 +86,7 @@ const UserDetails = () => {
     };
 
     function handleSaveUser() {
+
         if (!validateRole(role)) {
             toast.error("Role entered must be either 'admin' or 'user'");
             return;
@@ -90,29 +95,29 @@ const UserDetails = () => {
             toast.error("Status entered must be either 'active' or 'inactive'");
             return;
         }
+        setLoading(true);
 
-        axios.patch(`http://localhost:3001/update/${id}`, { name, email, role, status })
+        axios.patch(`https://rbac-server.vercel.app/update/${id}`, { name, email, role, status })
             .then((result) => {
-                console.log(result);
                 toast.success("Details edited succesfully.", { autoClose: 2000 });
                 setTimeout(() => {
                     navigate(`/org/${id}`);
                 }, 2000);
+                setLoading(false);
             })
             .catch((error) => {
-                console.log(error);
                 if (error.response) {
                     toast.error(`${error.response.data.message}`, { autoclose: 5000 });
                 }
                 else if (!error.response) {
                     toast.error(`${error.message}. Please try again later`, { autoclose: 5000 })
                 }
+                setLoading(false);
             });
     }
 
     function handleCancelEdit() {
         setEdit(false);
-        console.log("aaja aaja", edit);
     }
 
     return (
@@ -197,9 +202,9 @@ const UserDetails = () => {
                         {edit && (<button
                             onClick={handleSaveUser}
                             disabled={!isFormValid}
-                            className={`w-[150px] h-10 px-4 font-semibold rounded-md border border-slate-200 text-white bg-black ${isFormValid ? "bg-black" : "bg-gray-500 cursor-not-allowed"}`}
+                            className={`w-[150px] flex justify-center items-center h-10 px-4 font-semibold rounded-md border border-slate-200 text-white bg-black ${isFormValid ? "bg-black" : "bg-gray-500 cursor-not-allowed"}`}
                         >
-                            Save
+                            {loading && <Spinner color={"white"} width={"w-5"} />} Save
                         </button>)}
                     </div>
                 </div>

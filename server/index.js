@@ -1,8 +1,3 @@
-// mongo paassword = 6i4wKnsCZJMNwoe8
-// mongo username = amrit_27
-
-// "mongodb+srv://amrit_27:6i4wKnsCZJMNwoe8@cluster0.wl8o0.mongodb.net/MEMBER?retryWrites=true&w=majority&appName=Cluster0"
-
 require("dotenv").config()
 const express = require("express");
 const mongoose = require("mongoose");

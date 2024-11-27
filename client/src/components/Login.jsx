@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
-import Navbar from "./Navbar";
 import axios from "axios";
 
+//toastify
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+//components
+import Spinner from "./spinner";
+import Navbar from "./Navbar";
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
   const isFormValid = email && password;
   const navigate = useNavigate();
@@ -23,28 +27,30 @@ const Login = () => {
 
   function handleLogin(e) {
     e.preventDefault();
+    setLoading(true);
     axios
-      .post("http://localhost:3001/login", { email, password })
+      .post("https://rbac-server.vercel.app/login", { email, password })
       .then((result) => {
-        console.log(result);
+        console.log(result.data)
         toast.success(`${result.data.message}`, { autoClose: 2000 });
         localStorage.setItem("user", result.data.id);
         localStorage.setItem("role", result.data.role);
         setTimeout(() => {
           navigate(`/org/${result.data.id}`);
         }, 2000);
-      })
+        setLoading(false);
+      }
+      )
       .catch((error) => {
-        console.log(error);
-        if(error.response)
-        {
+        if (error.response) {
           toast.error(`${error.response.data.message}`, { autoclose: 5000 });
         }
-        else if(!error.response){
-          toast.error(`${error.message}. Please try again later`, { autoclose: 5000 })
+        else if (!error.response) {
+          toast.error(`${error.message}. Please try again later`, { autoclose: 5000 });
         }
+        setLoading(false);
       });
-  }
+  };
 
   return (
     <div className="w-full text-white bg-cyan-900 h-screen">
@@ -83,10 +89,10 @@ const Login = () => {
 
           <div className="mb-8">
             <button
-              className={`block w-full h-10 px-6 font-semibold rounded-md border border-slate-200 text-white ${isFormValid ? "bg-black" : "bg-gray-500"
+              className={`flex justify-center items-center w-full h-10 px-6 font-semibold rounded-md border border-slate-200 text-white ${isFormValid ? "bg-black" : "bg-gray-500"
                 }`}
             >
-              Log In
+              {loading && <Spinner color={"white"} width={"w-5"} />} Log In
             </button>
           </div>
           <div className="mb-8 flex justify-center">

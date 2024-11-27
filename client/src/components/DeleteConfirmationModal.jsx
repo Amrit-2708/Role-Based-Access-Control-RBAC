@@ -1,11 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
+//component and heroicons
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import axios from 'axios'
+
+//toastify
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from 'react-router-dom';
 
 
 export default function Example({ id, closeDeleteModal }) {
@@ -18,9 +22,8 @@ export default function Example({ id, closeDeleteModal }) {
     function handleDeleteUser(e) {
         e.preventDefault();
         axios
-            .delete(`http://localhost:3001/remove/${id}`)
+            .delete(`https://rbac-server.vercel.app/remove/${id}`)
             .then((result) => {
-                console.log("successful wale", result);
                 toast.success(`${result.data.message}`, { autoClose: 2000 });
                 setTimeout(() => {
                     closeDeleteModal();
@@ -30,7 +33,6 @@ export default function Example({ id, closeDeleteModal }) {
                 }, 2000);
             })
             .catch((error) => {
-                console.log(error);
                 if (error.response) {
                     toast.error(`${error.response.data.message}`, { autoclose: 3000 });
                     setTimeout(() => {

@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+//components
+import Navbar from './Navbar';
+
 
 const Orgview = () => {
     const [users, setUsers] = useState([]); // State to store user data
@@ -41,7 +44,7 @@ const Orgview = () => {
         // Fetch users when the component mounts
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/users");
+                const response = await axios.get("https://rbac-server.vercel.app/users");
 
                 if (response.data.message === "Users retrieved successfully") {
                     setUsers(response.data.data); // Store the users in state
@@ -56,7 +59,6 @@ const Orgview = () => {
     }, []); // Empty dependency array to run only once when the component mounts
 
     function handleclick(userId) {
-        console.log("id", userId);
         navigate(`/user/${userId}`, { state: { isAdmin } }); 
     }
 
@@ -76,16 +78,13 @@ const Orgview = () => {
     const endIndex = startIndex + rowsPerPage; // End index for the current page
     const currentUsers = filteredUsers.slice(startIndex, endIndex); // Slice users for the current page
 
-
-    console.log("dekhe zara data aaya ki ni:", users);
-
     return (
         <div className='bg-cyan-900'>
             <Navbar isAdmin={isAdmin} />
-            <div className='bordder-8 bg-cyan-900 flex justify-center'>
+            {users.length >0 && (<div className='bordder-8 bg-cyan-900 flex justify-center'>
                 <h1 className='text-5xl text-white font-bold mt-5 mb-5'>Welcome {localStorage.getItem("role")}</h1>
-            </div>
-            <div className='bg-cyan-900 flex justify-center mt-12 iteems-center h-screen'>
+            </div>)}
+            {users.length>0 && (<div className='bg-cyan-900 flex justify-center mt-12 iteems-center h-screen'>
                 <div className="bg-pinnk-400 border-yellow-500 flex flex-col overflow-x-auto">
                     <div className="relative bg-red-d400 border-8d mb-2 flex flex-col sm:flex-row justify-between">
                         <input
@@ -154,7 +153,12 @@ const Orgview = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>)}
+            {error && (<div className='text-3xl font-bold font-serif Times New Roman bg-cyan-900 flex justify-center items-center h-screen'>
+                <div>
+                    <span>{error}. Please try again</span>
+                </div>
+            </div>)}
         </div>
     );
 }

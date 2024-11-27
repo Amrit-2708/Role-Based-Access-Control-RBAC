@@ -1,7 +1,11 @@
 import { useState, useEffect} from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+//component
 import Navbar from "./Navbar";
+
+//toastify
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,18 +24,15 @@ const Signup = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("sab sahi hai");
     axios
-      .post("http://localhost:3001/signup", { name, email, password })
+      .post("https://rbac-server.vercel.app/signup", { name, email, password })
       .then((result) => {
         toast.success(`${result.data.message}. Now Log In`)
-        console.log("signup wale:", result);
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       })
       .catch((error) => {
-        console.log(error);
         if (error.response) {
           toast.error(`${error.response.data.message}. Please use another email id`, { autoclose: 5000 });
         }

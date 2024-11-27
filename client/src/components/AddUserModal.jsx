@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+//hero icons
 import {
     Dialog,
     DialogBackdrop,
@@ -11,6 +15,8 @@ import {
     CheckIcon,
 } from "@heroicons/react/20/solid";
 
+//component
+import Spinner from "./spinner";
 import {
     Label,
     Listbox,
@@ -18,10 +24,11 @@ import {
     ListboxOption,
     ListboxOptions,
 } from "@headlessui/react";
-import axios from "axios";
+
+//toastify
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+
 
 const roles = [
     {
@@ -41,29 +48,31 @@ export default function Example() {
     const [email, setEmail] = useState();
     const [role, setRole] = useState(roles[1]);
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
 
     const isFormValid = name && email && role.name;
     const token = localStorage.getItem("user");
 
     function handleAddUser() {
         const final_role = role.name;
+        setLoading(true);
         axios
-            .post("http://localhost:3001/adduser", { name, email, final_role })
+            .post("https://rbac-server.vercel.app/adduser", { name, email, final_role })
             .then((result) => {
                 toast.success(`${result.data.message}.`, {autoClose: 5000});
-                console.log("added wale:", result);
                 setTimeout(() => {
                     navigate(`/org/${token}`);
                 }, 5000);
+                setLoading(false);
             })
             .catch((error) => {
-                console.log(error);
                 if (error.response) {
                     toast.error(`${error.response.data.message}.`, { autoclose: 5000 });
                 }
                 else if (!error.response) {
                     toast.error(`${error.message}. Please try again later`, { autoclose: 5000 })
                 }
+                setLoading(false);
             });
     }
 
@@ -184,7 +193,7 @@ export default function Example() {
                                 onClick={handleAddUser}
                                 className={`inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto ${isFormValid ? "bg-red-600" : "bg-gray-500 cursor-not-allowed"}`}
                             >
-                                Add user
+                                {loading && <Spinner color={"white"} width={"w-5"} />}Add user
                             </button>
                             <button
                                 type="button"

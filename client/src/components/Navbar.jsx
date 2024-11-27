@@ -2,7 +2,6 @@
 import {useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const Navbar = (props) => {
 
   const navigate = useNavigate();
@@ -22,16 +21,6 @@ const Navbar = (props) => {
         <a className="navbar-brand" href="/">
           VRV Security
         </a>
-        {/* <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs
-          target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        ></button> */}
       </div>
       <div className="hidden lg:flex lg:gap-x-12">
         <a href="/" className="text-sm/6 font-semibold">

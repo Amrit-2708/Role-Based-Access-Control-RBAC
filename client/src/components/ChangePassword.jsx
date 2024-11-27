@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
-import Navbar from './Navbar'
+
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+
+//toastify
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+//components
+import Spinner from "./spinner";
+import Navbar from './Navbar'
 
 const ChangePassword = () => {
     const [newPass, setNewpass] = useState();
+    const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -15,17 +21,18 @@ const ChangePassword = () => {
 
     function handlePasswordChange(e) {
         e.preventDefault();
-        console.log("working fine");
-        axios.patch(`http://localhost:3001/change_password/${id}`, { newPass })
+        setLoading(true);
+        axios.patch(`https://rbac-server.vercel.app/change_password/${id}`, { newPass })
             .then((result) => {
-                console.log(result);
                 toast.success("Password Changed Succesfully", { autoClose: 2000 });
                 setTimeout(() => {
                     navigate(`/org/${id}`);
                 }, 2000);
+                setLoading(false);
             })
             .catch((error) => {
                 toast.error(`${error.response.data.message}. Please try again`, { autoClose: 2000 })
+                setLoading(false);
             });
     }
 
@@ -59,9 +66,9 @@ const ChangePassword = () => {
                         <button
                             disabled={!isbtnValid}
                             onClick={handlePasswordChange}
-                            className={`w-[150px] h-10 px-4 font-semibold rounded-md mb-4 sm:mb-4 lg:mb-0 border border-slate-200 text-white bg-black ${isbtnValid ? "bg-black" : "bg-gray-500"}`}
+                            className={`w-[150px] flex justify-center items-center h-10 px-4 font-semibold rounded-md mb-4 sm:mb-4 lg:mb-0 border border-slate-200 text-white bg-black ${isbtnValid ? "bg-black" : "bg-gray-500"}`}
                         >
-                            Save
+                            {loading && <Spinner color={"white"} width={"w-5"} />} Save
                         </button>
                         <button
                             onClick={handleCancelEdit}
