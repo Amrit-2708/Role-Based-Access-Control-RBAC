@@ -97,11 +97,4 @@
    npm run dev
    ```
    
-3. Run the backend:
-   Open a new terminal
-   ```bash
-   cd server
-   npm install
-   nodemon index.js
-   
-   ```
+3. Server is already hosted on `https://rbac-server.vercel.app`
