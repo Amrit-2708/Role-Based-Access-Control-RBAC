@@ -44,7 +44,7 @@ const ChangePassword = () => {
         <div>
             <Navbar />
             <div className='bg-cyan-900 flex justify-center items-center h-screen'>
-                <div className='w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/3 flex flex-col items-start border-8 border-yellow-500 overflow-x-auto'>
+                <div className='w-auto sm:w-auto md:w-auto lg:w-auto flex flex-col items-start border-8 border-yellow-500 overflow-x-auto'>
                     <div className='flex flex-col mt-5 ml-8 mb-8'>
                         <span className='text-2xl text-white font-bold'>ID</span>
                         <span className='text-white pr-12'>{id}</span>
@@ -77,11 +77,6 @@ const ChangePassword = () => {
                             Cancel
                         </button>
                     </div>
-                </div>
-            </div>
-            <div className='text-3xl font-bold font-serif Times New Roman bg-cyan-900 flex justify-center items-center h-screen'>
-                <div>
-                    <span> Please try again</span>
                 </div>
             </div>
             <ToastContainer />
