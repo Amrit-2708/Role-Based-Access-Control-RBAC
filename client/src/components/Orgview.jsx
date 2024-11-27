@@ -112,7 +112,7 @@ const Orgview = () => {
                         <table className='shadow-2xl font-[Poppins] border-2 border-cyan-200'>
                             <thead className='text-white'>
                                 <tr>
-                                    <th className='px-6 py-3 bg-cyan-800'>ID</th>
+                                    <th className='px-6 py-3 bg-cyan-800'>S.No</th>
                                     <th className='px-6 py-3 bg-cyan-800'>Name</th>
                                     <th className='px-6 py-3 bg-cyan-800'>Email</th>
                                     <th className='px-6 py-3 bg-cyan-800'>Role</th>
