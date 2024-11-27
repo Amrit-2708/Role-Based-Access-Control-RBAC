@@ -1,29 +1,5 @@
 # Role-Based Access Control (RBAC) UI
 
-## Assignment Details
-**Scenario:**  
-Build an admin dashboard for managing users, roles, and permissions. The goal is to design a secure and user-friendly interface where administrators can assign roles, define permissions, and manage users efficiently.
-
-### Core Requirements
-1. **User Management:**  
-   - View and manage users.  
-   - Add, edit, or delete users.  
-   - Assign roles to users and manage their status (e.g., Active/Inactive).  
-
-2. **Role Management:**  
-   - Define and edit roles.  
-   - Include permissions for roles (e.g., Read, Write, Delete) or custom attributes.  
-
-3. **Dynamic Permissions:**  
-   - Assign or modify permissions for roles.  
-   - Display permissions clearly for ease of understanding and modification.  
-
-4. **Custom API Simulation (Optional):**  
-   - Mock API calls for CRUD operations on users and roles.  
-   - Simulate server responses to validate functionality.  
-
----
-
 ## Project Workflow and Features
 
 ### 1. **Homepage**
@@ -111,4 +87,21 @@ Build an admin dashboard for managing users, roles, and permissions. The goal is
 ### How to Run the Project
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/Amrit-2708/Role-Based-Access-Control-RBAC
+   ```
+   
+2. Run frontend:
+   ```bash
+   cd client
+   npm install
+   npm run dev
+   ```
+   
+3. Run the backend:
+   Open a new terminal
+   ```bash
+   cd server
+   npm install
+   nodemon index.js
+   
+   ```
